@@ -1,0 +1,14 @@
+{
+  "name": "Ry Toast Array",
+  "description": "Extensión de arreglo de Toast para mostrar información al hacer hover sobre elementos",
+  "type": "visualization",
+  "version": "2.0.0",
+  "icon": "icon-toast.png",
+  "preview": "preview-toast.png",
+  "keywords": "toast, tooltip, hover, kpi",
+  "author": "Daniel Rodríguez",
+  "homepage": "",
+  "license": "",
+  "repository": {},
+  "dependencies": {}
+}
