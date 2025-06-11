@@ -10,6 +10,8 @@
 
 `Ry-Toast-Array` es un componente de extensión para Qlik Sense que permite asociar **notificaciones tipo “toast”** a objetos visuales, principalmente KPIs, pero también otros elementos de la hoja. Ideal para mostrar información contextual, alertas, sugerencias o mensajes personalizados al usuario final.
 
+![Preview](preview-toast.png)
+
 ---
 
 ## 🎯 Funcionalidades principales
@@ -52,6 +54,14 @@
 
 ---
 
+## 🧩 Compatibilidad
+
+- Qlik Sense Desktop y Enterprise
+- Probado en versión September 2023 y posteriores
+- Compatible con temas personalizados
+
+---
+
 ## 💡 Ejemplo de contenido con HTML y expresión
 
 ```qlik
@@ -69,4 +79,7 @@ chr(10)) &
 
 ---
 
-## 📜 Licencia: MIT
+## 📜 Licencia
+
+Este proyecto está licenciado bajo los términos de la licencia [MIT](LICENSE).
+
