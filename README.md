@@ -66,3 +66,6 @@ aggr(
 chr(10)) &
 '</ul>'
 
+---
+
+## 📜 Licencia: MIT
