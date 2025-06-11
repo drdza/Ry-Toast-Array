@@ -1,9 +1,5 @@
-define([
-  "jquery",
-  "qlik",  
-  "css!./style.css"
-], function ($, qlik, bootstrapCss) {
-'use strict';
+define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
+  'use strict';
 
   return {
     initialProperties: {
@@ -96,7 +92,15 @@ define([
     },
 
     paint: function($element, layout) {
-      $element.empty().off();
+	$element.empty().off().css({
+        position: 'absolute',
+        width: '0',
+        height: '0',
+        overflow: 'visible',
+        pointerEvents: 'none',
+        opacity: 0
+      });
+	    
       // Eliminar todos los toasts anteriores
       $('.qlik-toast[data-extension-id="'+layout.qInfo.qId+'"]').remove();
 
@@ -107,7 +111,7 @@ define([
       const attachToast = (config, index) => {
         const toastId = `toast-${layout.qInfo.qId}-${index}`;
 		
-		const bgColor = (typeof config.backgroundColor === 'string' ? config.backgroundColor : 'rgba(0,0,0,0.85)').replace(/['"]/g, '');
+	const bgColor = (typeof config.backgroundColor === 'string' ? config.backgroundColor : 'rgba(0,0,0,0.85)').replace(/['"]/g, '');
         const fontColor = (typeof config.fontColor === 'string' ? config.fontColor : '#ffffff').replace(/['"]/g, '');
 /*
 		const $toast = $(`
