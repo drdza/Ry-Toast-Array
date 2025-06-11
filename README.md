@@ -11,7 +11,7 @@ Componente de notificación tipo "toast" para Qlik Sense. Permite asociar mensaj
 
 - Configuración dinámica de múltiples toasts
 - Personalización de color, posición, duración y retardo
-- Compatibilidad con Markdown y listas HTML
+- Compatibilidad con etiquetas HTML
 - Ideal para mostrar alertas o avisos UX-friendly
 
 ## 🛠 Instalación
