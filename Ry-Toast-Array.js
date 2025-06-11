@@ -1,5 +1,5 @@
-define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
-  'use strict';
+define(["jquery", "qlik", "css!./style.css"], function ($, qlik, bootstrapCss) {
+'use strict';
 
   return {
     initialProperties: {
@@ -41,8 +41,13 @@ define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
                   type: "string",
                   label: "Contenido del Toast",
                   ref: "toastContent",
-                  defaultValue: "Información adicional",
-                  expression: "optional"
+				  defaultValue: "= " +
+				  				"'Hola, soy un toast!' & chr(10) & " +
+								"'Este componente te ayudará a que manejes información relevante.' & repeat(chr(10),2) & " +
+								"'Puedes integrar fórmulas, texto y código html estilizado con el apoyo de un MultiKPI.' & repeat(chr(10),2) & " +
+								"'Soy un componente poderoso creado por el equipo de <b>IE @ Grupo Reyma - 2025.</b>' & chr(10) & " +
+								"repeat('=',80)",
+				  expression: "always"
                 },
 				backgroundColor: {
 				  type: "string",							
@@ -76,13 +81,10 @@ define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
                   ref: "position",
                   component: "dropdown",
                   options: [
-                    { value: "top", label: "Arriba" },
-                    { value: "bottom", label: "Abajo" },
-                    { value: "left", label: "Izquierda" },
-                    { value: "right", label: "Derecha" },
+                    { value: "fixed-bottom", label: "Tipo Notificación" },
                     { value: "target", label: "Alineado con el target" }
                   ],
-                  defaultValue: "bottom"
+                  defaultValue: "fixed-bottom"
                 }
               }
             }
@@ -92,15 +94,7 @@ define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
     },
 
     paint: function($element, layout) {
-	$element.empty().off().css({
-        position: 'absolute',
-        width: '0',
-        height: '0',
-        overflow: 'visible',
-        pointerEvents: 'none',
-        opacity: 0
-      });
-	    
+      $element.empty().off();
       // Eliminar todos los toasts anteriores
       $('.qlik-toast[data-extension-id="'+layout.qInfo.qId+'"]').remove();
 
@@ -111,26 +105,8 @@ define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
       const attachToast = (config, index) => {
         const toastId = `toast-${layout.qInfo.qId}-${index}`;
 		
-	const bgColor = (typeof config.backgroundColor === 'string' ? config.backgroundColor : 'rgba(0,0,0,0.85)').replace(/['"]/g, '');
-        const fontColor = (typeof config.fontColor === 'string' ? config.fontColor : '#ffffff').replace(/['"]/g, '');
-/*
-		const $toast = $(`
-		  <div id="${toastId}"		  	
-			class="qlik-toast alert alert-info shadow-sm rounded" 
-			data-extension-id="${layout.qInfo.qId}" 
-			style="
-				display:none;
-				background-color: ${bgColor};
-				color: ${fontColor};
-				max-height: 250px;
-				overflow-y: auto;
-				scrollbar-width: thin;
-				scrollbar-color: #ccc transparent;
-			">
-			${config.toastContent || ""}
-		  </div>
-		`);
-*/		
+		const bgColor = (typeof config.backgroundColor === 'string' ? config.backgroundColor : 'rgba(0,0,0,0.85)').replace(/['"]/g, '');
+        const fontColor = (typeof config.fontColor === 'string' ? config.fontColor : '#ffffff').replace(/['"]/g, '');		
         const $toast = $(`
           <div id="${toastId}" class="qlik-toast shadow-sm" data-extension-id="${layout.qInfo.qId}"
                style="display:none; background-color: ${bgColor}; color: ${fontColor};">            
@@ -156,18 +132,29 @@ define(["jquery", "qlik", "css!./style.css"], function($, qlik) {
           }
         };
 
-        const positionToast = ($target) => {
-          const rect = $target[0].getBoundingClientRect();
-          const base = {
-            top: rect.top + window.scrollY,
-            left: rect.left + window.scrollX
-          };
-		  		 
-		  return {
-			top: base.top + ($target.outerHeight() / 2) - ($toast.outerHeight() / 2),
-			left: base.left + $target.outerWidth() + 10
-		  };
-        };
+		const positionToast = ($target) => {
+		  switch(config.position) {
+		  	case "target":
+				const rect = $target[0].getBoundingClientRect();
+				const base = {
+					top: rect.top + window.scrollY,
+					left: rect.left + window.scrollX
+				  };
+
+				return {
+					top: base.top + ($target.outerHeight() / 2) - ($toast.outerHeight() / 2),
+					left: base.left + $target.outerWidth() + 10
+				};
+		  	case "fixed-bottom":
+			default:
+				return {
+				   position: "fixed",
+			  	   bottom: "20px",
+			  	   right: "20px",
+			       transform: "translateX(0%)"
+				};
+		 }
+		};
 
         const connectEvents = () => {
           const $target = findTarget();
