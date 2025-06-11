@@ -1,4 +1,4 @@
-# Ry-Toast-Array for Qlik Sense
+# Ry-Toast-Array para Qlik Sense
 
 **Versión:** 2.0.0  
 **Autor:** Daniel Rodríguez – IE Team @ Grupo Reyma
@@ -12,7 +12,6 @@ Componente de notificación tipo "toast" para Qlik Sense. Permite asociar mensaj
 - Configuración dinámica de múltiples toasts
 - Personalización de color, posición, duración y retardo
 - Compatibilidad con Markdown y listas HTML
-- Soporte para scroll cuando hay mucho contenido
 - Ideal para mostrar alertas o avisos UX-friendly
 
 ## 🛠 Instalación
