@@ -65,6 +65,7 @@ aggr(
 , departamento_asignado),
 chr(10)) &
 '</ul>'
+```
 
 ---
 
